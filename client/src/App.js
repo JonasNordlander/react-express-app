@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
-import React, { useEffect, useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home/Home';
+import Chat from './pages/Chat/Chat';
+import MainLayout from './layouts/MainLayout';
 
 function App() {
-  const [message, setMessage] = useState('Loading...');
-
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/hello`)
-      .then(res => res.json())
-      .then(data => setMessage(data.message))
-      .catch(err => setMessage('Error fetching message'));
-  }, []);
-
   return (
-    <div className="container mt-5">
-      <h1 className="text-primary">React + Express App</h1>
-      <p className="lead">{message}</p>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
+        </Route>
+        <Route path="/chat" element={<MainLayout />}>
+          <Route index element={<Chat />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 
